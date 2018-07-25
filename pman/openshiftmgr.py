@@ -144,10 +144,6 @@ class OpenShiftManager(object):
                             "mountPath": "/etc/swift",
                             "name": "swift-credentials",
                             "readOnly": True
-                        },
-                        {
-                            "mountPath": "/local",
-                            "name": "local-volume"
                         }
                     ]
                 }
@@ -160,10 +156,6 @@ class OpenShiftManager(object):
                     {
                         "name": "SWIFT_KEY",
                         "value": name
-                    },
-                    {
-                        "name": "NUMBER_OF_WORKERS",
-                        "value": number_of_workers
                     },
                     {
                         "name": "KUBECFG_PATH",
@@ -180,7 +172,7 @@ class OpenShiftManager(object):
                 ],
                 "command": [
                     "python3",
-                    "put_data.py"
+                    "watch.py"
                 ],
                 "resources": {
                     "limits": {
@@ -207,10 +199,6 @@ class OpenShiftManager(object):
                         "mountPath": "/tmp/.kube/",
                         "readOnly": True
                     },
-                    {
-                        "mountPath": "/local",
-                        "name": "local-volume"
-                    }
                 ]
             })
             d_job['spec']['template']['spec']['volumes'] = [
@@ -231,10 +219,6 @@ class OpenShiftManager(object):
                     "secret": {
                         "secretName": "kubecfg"
                     }
-                },
-                {
-                    "name": "local-volume",
-                    "emptyDir": {}
                 }
             ]
         else: # os.environ.get('STORAGE_TYPE') == 'hostPath'
